@@ -85,6 +85,7 @@ class Router
             ];
         }
 
+        $bad_request = false;
         foreach ($matches as $match) {
             if ($match['index'] && $match['request']) {
 
@@ -93,9 +94,16 @@ class Router
                         Request::passGet(self::getVarName($value), $request_uri[$key]);
                     }
                 }
-
                 return 'views/' . $match['route']['page'];
             }
+
+            if($match['index'] && !$match['request']){
+                $bad_request = true;
+            }
+        }
+
+        if($bad_request == true){
+            return 'views/errors/400.php';
         }
 
         return 'views/errors/404.php';
