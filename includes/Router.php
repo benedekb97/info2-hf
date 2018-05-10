@@ -132,4 +132,9 @@ class Router
         return false;
 
     }
+
+    public static function redirect($route)
+    {
+        header("Location: ".self::getLink($route));
+    }
 }
