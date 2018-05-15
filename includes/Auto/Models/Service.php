@@ -12,6 +12,10 @@ class Service extends Base
     private $fixer_id;
     private $car_id;
 
+    /**
+     * Service constructor.
+     * @param $id
+     */
     public function __construct($id)
     {
         $query = self::$mysql->query("SELECT * FROM services WHERE id='$id'");
@@ -31,6 +35,27 @@ class Service extends Base
         return true;
     }
 
+    /**
+     * @param $id
+     * @return Service
+     */
+    public static function find($id)
+    {
+        return new Service($id);
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function delete()
+    {
+        self::$mysql->query("DELETE FROM services WHERE id='$this->id'");
+
+        return true;
+    }
+
     public function getCost()
     {
         return $this->cost;
@@ -41,11 +66,17 @@ class Service extends Base
         return $this->description;
     }
 
+    /**
+     * @return User
+     */
     public function getFixer()
     {
         return new User($this->fixer_id);
     }
 
+    /**
+     * @return Car
+     */
     public function getCar()
     {
         return new Car($this->car_id);
@@ -83,6 +114,13 @@ class Service extends Base
         self::$mysql->query("UPDATE services SET car_id='$new_id' WHERE id='$this->id'");
     }
 
+    /**
+     * @param Car $car
+     * @param User $user
+     * @param $cost
+     * @param $description
+     * @return bool
+     */
     public static function create(Car $car, User $user, $cost, $description)
     {
         $cost = self::$mysql->real_escape_string($cost);
@@ -95,6 +133,9 @@ class Service extends Base
         return true;
     }
 
+    /**
+     * @return Service[]|bool
+     */
     public static function all()
     {
         $services = [];
@@ -110,5 +151,9 @@ class Service extends Base
         }
 
         return $services;
+    }
+
+    public function __toString(){
+        return "$this->id";
     }
 }

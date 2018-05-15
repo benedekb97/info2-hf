@@ -109,6 +109,11 @@ class Router
         return 'views/errors/404.php';
     }
 
+    /**
+     * @param $name
+     * @param array $vars
+     * @return bool|string
+     */
     public static function getLink($name, $vars = []){
 
         foreach(self::$routes as $route){
@@ -133,8 +138,8 @@ class Router
 
     }
 
-    public static function redirect($route)
+    public static function redirect($route, $vars = [])
     {
-        header("Location: ".self::getLink($route));
+        header("Location: ".self::getLink($route, $vars));
     }
 }

@@ -16,6 +16,9 @@ class User extends Base
     private $salt;
     private $mechanic;
 
+    /**
+     * @return string
+     */
     public static function generateSalt()
     {
         $characters = '0123456789qwertzuiopasdfghjklyxcvbnmQWERTZUIOPASDFGHJKLYXCVBNM';
@@ -34,6 +37,10 @@ class User extends Base
         return new User($id);
     }
 
+    /**
+     * @param $email
+     * @return User|null
+     */
     public static function findByEmail($email)
     {
         $query = self::$mysql->query("SELECT id FROM users WHERE email='$email'");
@@ -47,6 +54,11 @@ class User extends Base
         return new User($results['id']);
     }
 
+    /**
+     * @param $email
+     * @param $password
+     * @return bool
+     */
     public static function authenticate($email, $password)
     {
         $query = self::$mysql->query("SELECT password,salt FROM users WHERE email='$email'");
@@ -67,6 +79,15 @@ class User extends Base
         }
     }
 
+    /**
+     * @param $email
+     * @param $password
+     * @param $given_names
+     * @param $surname
+     * @param $date_of_birth
+     * @param $mechanic
+     * @return bool
+     */
     public static function create($email, $password, $given_names, $surname, $date_of_birth, $mechanic)
     {
         $email = self::$mysql->real_escape_string($email);
@@ -95,6 +116,9 @@ class User extends Base
         return false;
     }
 
+    /**
+     * @return User[]
+     */
     public static function all()
     {
         $users = [];
@@ -171,6 +195,9 @@ class User extends Base
         return $this->id;
     }
 
+    /**
+     * @return Car[]
+     */
     public function getCars()
     {
         $cars = [];
@@ -184,6 +211,9 @@ class User extends Base
         return $cars;
     }
 
+    /**
+     * @return User[]
+     */
     public static function mechanics()
     {
         $mechanics = [];
@@ -197,10 +227,13 @@ class User extends Base
         return $mechanics;
     }
 
+    /**
+     * @return Service[]
+     */
     public function services()
     {
         if(!$this->isMechanic()){
-            return 0;
+            return false;
         }else{
             $services = [];
 
@@ -212,5 +245,9 @@ class User extends Base
 
             return $services;
         }
+    }
+
+    public function __toString(){
+        return "$this->id";
     }
 }

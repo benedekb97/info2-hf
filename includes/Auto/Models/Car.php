@@ -12,6 +12,10 @@ class Car extends Base
     private $technical_exam_year;
     private $owner_id;
 
+
+    /**
+     * @return Car[]
+     */
     public static function all()
     {
         $cars = [];
@@ -25,11 +29,23 @@ class Car extends Base
         return $cars;
     }
 
+    /**
+     * @param $id
+     * @return Car
+     */
     public static function find($id)
     {
         return new Car($id);
     }
 
+    public function __toString(){
+        return "$this->id";
+    }
+
+    /**
+     * Car constructor.
+     * @param $id
+     */
     public function __construct($id)
     {
         $query = self::$mysql->query("SELECT * FROM cars WHERE id='$id'");
@@ -49,6 +65,13 @@ class Car extends Base
         return true;
     }
 
+    /**
+     * @param $type
+     * @param $age
+     * @param $technical_exam_year
+     * @param User $owner
+     * @return bool
+     */
     public static function create($type, $age, $technical_exam_year, User $owner)
     {
         $type = self::$mysql->real_escape_string($type);
@@ -81,6 +104,33 @@ class Car extends Base
         return $this->technical_exam_year;
     }
 
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    public function setAge($age)
+    {
+        $this->age = $age;
+    }
+
+    public function setTechnicalExamYear($technical_exam_year)
+    {
+        $this->technical_exam_year = $technical_exam_year;
+    }
+
+    public function setOwner($user){
+        $this->owner_id = $user;
+    }
+
+    public function save()
+    {
+        self::$mysql->query("UPDATE cars SET type='$this->type', age='$this->age', technical_exam_year='$this->technical_exam_year', owner_id='$this->owner_id' WHERE id='$this->id'");
+    }
+
+    /**
+     * @return User
+     */
     public function getOwner()
     {
         return new User($this->owner_id);

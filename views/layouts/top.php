@@ -22,9 +22,15 @@ namespace Auto;
             ?>
             <a class="header_link right first" href="<?= Router::getLink('logout'); ?>">Kijelentkezés</a>
             <?php
-            if($current_user->isMechanic() || $current_user->isAdmin()){
+            if($current_user->isMechanic()){
                 ?>
                 <a class="header_link right" href="<?= Router::getLink('user.fixes', ['user' => $current_user->getId()]); ?>">Én szervízeléseim</a>
+                <?php
+            }
+            if($current_user->isAdmin()){
+                ?>
+                <a class="header_link right" href="<?= Router::getLink('admin.services'); ?>">Összes szervízelés</a>
+                <a class="header_link right" href="<?= Router::getLink('admin.cars'); ?>">Összes autó</a>
                 <?php
             }
             ?>

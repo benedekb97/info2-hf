@@ -2,6 +2,8 @@
 
 namespace Auto;
 
+use Auto\Models\Car;
+
 if(!isset($current_user)){
     header("Location: ".Router::getLink('index.login'));
 }
@@ -33,6 +35,9 @@ include __DIR__ . "/../layouts/top.php";
                 <td><?= $service->getCost() ?></td>
                 <td><?= $service->getDescription() ?></td>
                 <td>
+                    <form action="<?= Router::getLink('user.services.delete', ['user' => $current_user->getId(), 'service' => $service->getId()]) ?>" method="POST">
+                        <input type="submit" value="&times;">
+                    </form>
                 </td>
             </tr>
             <?php
@@ -41,6 +46,24 @@ include __DIR__ . "/../layouts/top.php";
     }
     ?>
 </table>
+<br>
+<br>
+<form action="<?= Router::getLink('user.service.add', ['user' => $current_user]) ?>" method="POST">
+    <select required name="car">
+        <option selected disabled hidden></option>
+        <?php
+        foreach(Car::all() as $car){
+            ?>
+            <option value="<?= $car ?>"><?= $car->getType() ?> - <?= $car->getOwner()->getFullName() ?></option>
+            <?php
+
+        }
+        ?>
+    </select>
+    <input required type="number" placeholder="Ár" name="cost">
+    <input required type="text" placeholder="Leírás" name="description">
+    <input type="submit" value="Mentés">
+</form>
 <?php
 
 include __DIR__ . "/../layouts/bottom.php";

@@ -4,13 +4,6 @@ namespace Auto;
 
 use Auto\Models\User;
 
-require_once 'Base.php';
-require_once 'Models/Car.php';
-require_once 'Models/User.php';
-require_once 'Models/Service.php';
-require_once 'Request.php';
-require_once 'Router.php';
-
 session_start();
 
 Base::db_connect('localhost', 'root', '', 'auto');
