@@ -6,6 +6,7 @@ Router::get('', 'index.php', 'index');
 Router::get('#login', 'index.php', 'index.login');
 
 Router::get('cars', 'cars.php', 'cars');
+Router::post('cars', 'cars.php', 'cars.search');
 Router::get('mechanics', 'mechanics.php', 'mechanics');
 Router::get('profile', 'profile.php', 'profile');
 Router::get('services', 'services.php', 'services');

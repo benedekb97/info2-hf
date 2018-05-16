@@ -8,6 +8,10 @@ namespace Auto;
 </head>
 <body>
 <div class="container">
+    <div class="top">
+        Autószervízelés<br>
+        <span class="header-title">2018</span>
+    </div>
     <div class="header">
         <a class="header_link first" href="<?= Router::getLink('index'); ?>">Főoldal</a>
         <a class="header_link" href="<?= Router::getLink('cars'); ?>">Autók</a>

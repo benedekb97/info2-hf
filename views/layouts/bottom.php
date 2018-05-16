@@ -1,6 +1,9 @@
 <?php
 namespace Auto;
 ?></div>
+<div class="footer">
+    Burgess Benedek Péter - LUN1BV
+</div>
 </div>
 <?php
 if(!isset($current_user)){

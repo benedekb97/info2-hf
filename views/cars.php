@@ -8,7 +8,28 @@ $page_title = "Autók";
 
 include "layouts/top.php";
 
+
+if(Request::type() == "POST"){
+    if(Request::post('search_value')!=null){
+    $search_value = Request::post('search_value');
+
+    $cars = Car::search($search_value);
+
+        ?>
+
+        <?php
+    }
+
+}else {
+    $cars = Car::all();
+}
 ?>
+<form action="<?= Router::getLink('cars.search') ?>" method="POST">
+    Keresés:
+    <input type="text" name="search_value" placeholder="Autó típusa">
+    <input type="submit" value="Keresés">
+    <input type="button" onclick="window.location = window.location" value="Összes">
+</form>
     <table>
         <tr>
             <th>Típus</th>
@@ -28,7 +49,7 @@ include "layouts/top.php";
             ?>
         </tr>
         <?php
-        foreach(Car::all() as $car){
+        foreach($cars as $car){
             ?>
             <tr>
                 <td><?= $car->getType() ?></td>

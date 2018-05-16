@@ -29,8 +29,8 @@ include __DIR__ . "/../../layouts/top.php";
         <?php
         foreach (Car::all() as $car) {
             ?>
-            <form action="<?= Router::getLink('admin.cars.modify', ['car' => $car]) ?>" method="POST">
-                <tr>
+            <tr>
+                <form action="<?= Router::getLink('admin.cars.modify', ['car' => $car]) ?>" method="POST">
                     <td>
                         <input type="text" name="type_<?= $car ?>" placeholder="Autó típusa" value="<?= $car->getType() ?>">
                     </td>
@@ -60,13 +60,20 @@ include __DIR__ . "/../../layouts/top.php";
                         <input type="button" onclick="window.location = window.location" value="Visszaállítás">
                         <input type="button" onclick="$('#delete-<?= $car ?>').submit()" value="&times;">
                     </td>
-                </tr>
-            </form>
-            <form id="delete-<?= $car ?>" action="<?= Router::getLink('admin.cars.delete', ['car' => $car]) ?>" method="POST"></form>
+                </form>
+
+            </tr>
             <?php
         }
         ?>
     </table>
+    <?php
+foreach(Car::all() as $car){
+    ?>
+    <form id="delete-<?= $car ?>" action="<?= Router::getLink('admin.cars.delete', ['car' => $car]) ?>" method="POST"></form>
+    <?php
+}
+?>
 <br>
 <br>
 <form action="<?= Router::getLink('admin.cars.new') ?>" method="POST">

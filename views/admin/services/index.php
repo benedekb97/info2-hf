@@ -30,8 +30,8 @@ include __DIR__ . "/../../layouts/top.php";
     <?php
     foreach(Service::all() as $service){
         ?>
-        <form action="<?= Router::getLink('admin.services.modify', ['service' => $service->getId()]) ?>" method="POST">
-            <tr>
+        <tr>
+            <form action="<?= Router::getLink('admin.services.modify', ['service' => $service->getId()]) ?>" method="POST">
                 <td>
                     <select name="car-<?= $service->getId() ?>">
                         <?php
@@ -63,7 +63,7 @@ include __DIR__ . "/../../layouts/top.php";
                     </select>
                 </td>
                 <td>
-                    <input name="cost-<?= $service->getId() ?>" type="text" value="<?= $service->getCost() ?>" placeholder="Ár">
+                    <input name="cost-<?= $service->getId() ?>" type="number" value="<?= $service->getCost() ?>" placeholder="Ár">
                 </td>
                 <td>
                     <input name="description-<?= $service->getId() ?>" type="text" value="<?= $service->getDescription() ?>" placeholder="Leírás">
@@ -73,14 +73,19 @@ include __DIR__ . "/../../layouts/top.php";
                     <input type="button" value="Visszaállítás" onclick="window.location = window.location">
                     <input type="button" onclick="$('#delete-<?= $service->getId() ?>').submit()" value="&times;">
                 </td>
-            </tr>
-        </form>
-        <form id="delete-<?= $service->getId() ?>" action="<?= Router::getLink('admin.services.delete', ['service' => $service->getId()]) ?>" method="POST"></form>
+            </form>
+        </tr>
         <?php
     }
     ?>
 </table>
-
+    <?php
+foreach(Service::all() as $service){
+    ?>
+    <form id="delete-<?= $service->getId() ?>" action="<?= Router::getLink('admin.services.delete', ['service' => $service->getId()]) ?>" method="POST"></form>
+    <?php
+}
+?>
 <br>
 <br>
 
@@ -106,7 +111,7 @@ include __DIR__ . "/../../layouts/top.php";
         }
         ?>
     </select>
-    <input type="text" name="cost" placeholder="Ár" maxlength="9" size="9">
+    <input type="number" name="cost" placeholder="Ár" maxlength="9" size="9">
     <input type="text" name="description" placeholder="Leírás">
     <input type="submit" value="Mentés">
 </form>

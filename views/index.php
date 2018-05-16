@@ -5,7 +5,7 @@ $page_title = "Főoldal";
 include "layouts/top.php";
 
 ?>
-anyád
+Üdvözöllek a főoldalon!
 <?php
 
 include "layouts/bottom.php";

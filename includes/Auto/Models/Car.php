@@ -38,6 +38,20 @@ class Car extends Base
         return new Car($id);
     }
 
+    public static function search($search_value)
+    {
+        $query = self::$mysql->query("SELECT id FROM cars WHERE type LIKE '%$search_value%'");
+
+        $cars = [];
+
+        while($row = $query->fetch_assoc()){
+            $cars[] = new Car($row['id']);
+        }
+
+        return $cars;
+
+    }
+
     public function __toString(){
         return "$this->id";
     }
@@ -111,16 +125,31 @@ class Car extends Base
 
     public function setAge($age)
     {
-        $this->age = $age;
+        if(!is_numeric($age)){
+            return false;
+        }else{
+            $this->age = $age;
+            return true;
+        }
     }
 
     public function setTechnicalExamYear($technical_exam_year)
     {
-        $this->technical_exam_year = $technical_exam_year;
+        if(!is_numeric($technical_exam_year)){
+            return false;
+        }else{
+            $this->technical_exam_year = $technical_exam_year;
+            return true;
+        }
     }
 
     public function setOwner($user){
-        $this->owner_id = $user;
+        if(User::find($user) != null){
+            $this->owner_id = $user;
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public function save()
