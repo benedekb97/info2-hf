@@ -2,24 +2,25 @@
 
 namespace Auto;
 
+use Auto\Controllers\ErrorController;
 
 class Router
 {
     protected static $routes;
 
-    public static function get($uri, $page, $name = ''){
+    public static function get($uri, $controller, $name = ''){
         self::$routes[] = [
             'uri' => explode('/', $uri),
-            'page' => $page,
+            'controller' => $controller,
             'type' => 'GET',
             'name' => $name
         ];
     }
 
-    public static function post($uri, $page, $name = ''){
+    public static function post($uri, $controller, $name = ''){
         self::$routes[] = [
             'uri' => explode('/', $uri),
-            'page' => $page,
+            'controller' => $controller,
             'type' => 'POST',
             'name' => $name
         ];
@@ -86,6 +87,7 @@ class Router
         }
 
         $bad_request = false;
+        $found = false;
         foreach ($matches as $match) {
             if ($match['index'] && $match['request']) {
 
@@ -94,19 +96,33 @@ class Router
                         Request::passGet(self::getVarName($value), $request_uri[$key]);
                     }
                 }
-                return 'views/' . $match['route']['page'];
+
+                $controller = 'Auto\Controllers\\' . ucfirst(explode('@',$match['route']['controller'])[0]);
+
+                $function = explode('@',$match['route']['controller'])[1];
+
+                return $controller::$function();
             }
 
             if($match['index'] && !$match['request']){
                 $bad_request = true;
             }
+
+            if($match['index']){
+                $found = true;
+            }
         }
 
         if($bad_request == true){
-            return 'views/errors/400.php';
+            return ErrorController::badRequest();
+        }elseif(!$found){
+            return ErrorController::notFound();
         }
 
-        return 'views/errors/404.php';
+        return ErrorController::notFound();
+
+
+        return true;
     }
 
     /**

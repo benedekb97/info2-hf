@@ -2,11 +2,11 @@
 
 namespace Auto;
 
-Router::get('', 'index.php', 'index');
-Router::get('#login', 'index.php', 'index.login');
+Router::get('', 'HomeController@index', 'index');
+Router::get('#login', 'HomeController@index', 'index.login');
 
-Router::get('cars', 'cars.php', 'cars');
-Router::post('cars', 'cars.php', 'cars.search');
+Router::get('cars', 'HomeController@cars', 'cars');
+Router::post('cars', 'HomeController@cars', 'cars.search');
 Router::get('mechanics', 'mechanics.php', 'mechanics');
 Router::get('profile', 'profile.php', 'profile');
 Router::get('services', 'services.php', 'services');
@@ -18,8 +18,8 @@ Router::post('user/{user}/cars/delete/{car}', 'user/delete_car.php', 'user.cars.
 Router::post('user/{user}/service/delete/{service}', 'user/delete_service.php', 'user.services.delete');
 Router::post('user/{user}/servce/new', 'user/add_service.php', 'user.service.add');
 
-Router::post('login', 'redirect/login.php', 'login');
-Router::get('logout', 'redirect/logout.php', 'logout');
+Router::post('login', 'AuthController@login', 'login');
+Router::get('logout', 'AuthController@logout', 'logout');
 
 Router::get('admin/services', 'admin/services/index.php', 'admin.services');
 Router::post('admin/services/new', 'admin/services/new.php', 'admin.services.new');
