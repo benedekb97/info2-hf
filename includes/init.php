@@ -6,7 +6,9 @@ use Auto\Models\User;
 
 session_start();
 
-Base::db_connect('localhost', 'root', '', 'auto');
+include('functions.php');
+
+Base::db_connect(env('MYSQL_HOST'), env('MYSQL_USER'), env('MYSQL_PASSWORD'), env('MYSQL_DATABASE'));
 
 Request::create();
 
