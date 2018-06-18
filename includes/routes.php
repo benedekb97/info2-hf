@@ -7,9 +7,9 @@ Router::get('#login', 'HomeController@index', 'index.login');
 
 Router::get('cars', 'HomeController@cars', 'cars');
 Router::post('cars', 'HomeController@cars', 'cars.search');
-Router::get('mechanics', 'mechanics.php', 'mechanics');
-Router::get('profile', 'profile.php', 'profile');
-Router::get('services', 'services.php', 'services');
+Router::get('mechanics', 'HomeController@mechanics', 'mechanics');
+Router::get('profile', 'HomeController@profile', 'profile');
+Router::get('services', 'HomeController@services', 'services');
 
 Router::get('user/{user}/fixes', 'user/fixes.php', 'user.fixes');
 Router::get('user/{user}/cars', 'user/cars.php', 'user.cars');

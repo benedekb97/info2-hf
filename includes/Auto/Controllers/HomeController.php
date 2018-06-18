@@ -6,13 +6,29 @@ use Auto\Controller;
 
 class HomeController extends Controller
 {
-    public static function index()
+
+    public function index()
     {
         return parent::view('index');
     }
 
-    public static function cars()
+    public function cars()
     {
         return parent::view('cars');
+    }
+
+    public function mechanics()
+    {
+        return parent::view('mechanics');
+    }
+
+    public function services()
+    {
+        return parent::view('services');
+    }
+
+    public function profile()
+    {
+        return parent::view('profile');
     }
 }

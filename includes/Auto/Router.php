@@ -3,6 +3,7 @@
 namespace Auto;
 
 use Auto\Controllers\ErrorController;
+use ControllerNotFoundException;
 
 class Router
 {
@@ -98,6 +99,12 @@ class Router
                 }
 
                 $controller = 'Auto\Controllers\\' . ucfirst(explode('@',$match['route']['controller'])[0]);
+
+                $controller = new $controller;
+
+                if($controller() != true){
+                    throw new ControllerNotFoundException;
+                }
 
                 $function = explode('@',$match['route']['controller'])[1];
 
